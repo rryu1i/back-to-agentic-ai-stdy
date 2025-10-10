@@ -1,4 +1,4 @@
-#%%
+
 import asyncio
 import tempfile
 from typing import List, Optional
@@ -28,7 +28,6 @@ agent = Agent(model=openai_model)
 
 #%%
 
-
 # --- 1. Pydantic Models (Data Schema for AI) ---
 class ProjectType(str, Enum):
     """Enumeration for the type of project."""
@@ -49,7 +48,7 @@ class ProjectRequirements(BaseModel):
     features: List[Feature] = Field(description="A list of the key features required.")
     success_metrics: List[str] = Field(description="How success will be measured.")
     constraints: Optional[List[str]] = Field(default=None, description="Any known limitations.")
-#%%
+
 
 SYSTEM_PROMPT = """
 You are a 'Project Intake Agent'. Your sole purpose is to gather requirements for a new project or feature from a user.
@@ -90,8 +89,6 @@ def run_dynamic_session():
         if "[DONE]" in agent_response_text:
             break
         
-        # We no longer have our own print() statement for the agent's question.
-        # We now immediately ask for input right after the agent speaks.
         user_response = input("👤 You: ")
         print()
 
@@ -117,4 +114,5 @@ def run_dynamic_session():
 
 #%%
 
-run_dynamic_session()
+if __name__ == '__main__':
+    run_dynamic_session()
